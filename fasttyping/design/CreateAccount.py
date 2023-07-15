@@ -4,18 +4,12 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QStackedWidget
 from PyQt6.QtWidgets import QWidget as QWidget
 
-<<<<<<< HEAD
-from Client import SharedData
-from Client.user.design.SameUsername import SameUsernameWindow
-=======
->>>>>>> feature-setup-wizard
-from Client.client_runner import get_header
+from design.SameUsername import SameUsernameWindow
 
 
 class CreateAccountWindow(QWidget):
-    def __init__(self, shared_data: SharedData):
+    def __init__(self):
         super().__init__()
-        self.shared_data = shared_data
         self.error_window = None
         self.error_ui = None
 
@@ -77,21 +71,7 @@ class CreateAccountWindow(QWidget):
         :param self: The instance of the class that this method belongs to.
         :return: The header obtained from the get_header function if the login is successful.
         """
-        user_email = self.get_email()
-        username = self.get_username()
-        password = self.get_password()
-        try:
-            header = get_header(username=username, password=password, user_email=user_email, to_signup=True)
-            print(header)
-            if header.get("Authorization", None) is None:
-                self.shared_data.header = header
-                self.stacked_widget.setCurrentIndex(0)
-            else:
-                print("Here")
-
-        except Exception as e:
-            traceback.print_exc()
-            self.show_error_window()
+        pass
 
     def show_error_window(self):
         if self.error_window is None:

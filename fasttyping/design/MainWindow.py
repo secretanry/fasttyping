@@ -1,17 +1,12 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QStackedWidget
 from PyQt6.QtWidgets import QWidget as QWidget
-<<<<<<< HEAD
 
-from Client import SharedData
-=======
->>>>>>> feature-setup-wizard
 
 
 class MainWindow(QWidget):
-    def __init__(self, shared_data: SharedData):
+    def __init__(self):
         super().__init__()
-        self.shared_data = shared_data
 
     def open_login(self):
         """
@@ -106,10 +101,10 @@ class MainWindow(QWidget):
         self.our_text_for_typing.setHtml(colored_text)
 
     def typingAccuracy(self):
-
+        pass
 
     def typingSpeed(self):
-
+        pass
 
 
     def setup_ui(self, stacked_widget: QStackedWidget):
