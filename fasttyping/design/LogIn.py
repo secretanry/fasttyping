@@ -1,7 +1,7 @@
+import sqlite3
+
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QStackedWidget, QWidget
-
-
 
 
 class LogInWindow(QWidget):
@@ -75,7 +75,23 @@ class LogInWindow(QWidget):
         :param self: The instance of the class that this method belongs to.
         :return: The header obtained from the get_header function if the login is successful.
         """
-        pass
+        username = self.get_username()
+        password = self.get_password()
+
+        connection = sqlite3.connect("mydb.db")
+        cursor = connection.cursor()
+        res = cursor.execute("SELECT id, password from Users where username='" + username + "';").fetchone()
+
+        if res is not None:
+            if res[0] == password:
+                dic = {
+                    "uid": res[0][0],
+                    "username": username
+                }
+                with open("user.txt", "w") as f:
+                    f.write(str(dic))
+                self.open_signup()
+        connection.close()
 
     def setup_ui(self, stacked_widget: QStackedWidget):
         """

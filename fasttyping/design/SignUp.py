@@ -5,6 +5,12 @@ from PyQt6.QtWidgets import QStackedWidget, QWidget
 class SignUpWindow(QWidget):
     def __init__(self):
         super().__init__()
+        dic = {
+            "uid": 0,
+            "username": ""
+        }
+        with open("user.txt", "w") as f:
+            f.write(str(dic))
 
     def open_main(self):
         """
