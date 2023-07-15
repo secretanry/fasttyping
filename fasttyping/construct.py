@@ -2,6 +2,7 @@ import sys
 
 from PyQt6.QtWidgets import QApplication, QStackedWidget
 
+
 from design.Account import AccountWindow
 from design.Achievements import AchievementsWindow
 from design.CreateAccount import CreateAccountWindow

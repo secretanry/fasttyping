@@ -4,7 +4,10 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QStackedWidget
 from PyQt6.QtWidgets import QWidget as QWidget
 
+import email_validator
 from design.SameUsername import SameUsernameWindow
+
+import sqlite3
 
 
 class CreateAccountWindow(QWidget):
@@ -71,7 +74,26 @@ class CreateAccountWindow(QWidget):
         :param self: The instance of the class that this method belongs to.
         :return: The header obtained from the get_header function if the login is successful.
         """
-        pass
+        username = self.get_username()
+        password = self.get_password()
+        email = self.get_email()
+        # try:
+        #     email_info = email_validator.validate_email(email, check_deliverability=True)
+        #     email = email_info.normalized
+        # except email_validator.EmailNotValidError:
+        #     self.show_error_window()
+
+        connection = sqlite3.connect("mydb.db")
+        cursor = connection.cursor()
+
+        res = cursor.execute("SELECT username from Users where username='" + username + "';").fetchall()
+        if len(res) != 0:
+            self.show_error_window()
+        cursor.execute(
+            "INSERT into Users (username, password, email, disabled) values('" + username + "', '" + password + "', '" + email + "', FALSE);")
+        connection.commit()
+        connection.close()
+        self.open_main()
 
     def show_error_window(self):
         if self.error_window is None:

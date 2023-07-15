@@ -1,11 +1,12 @@
+import sqlite3
+
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QStackedWidget
 from PyQt6.QtWidgets import QWidget as QWidget
 
 
-
 class AccountWindow(QWidget):
-    def __init__(self,):
+    def __init__(self):
         super().__init__()
 
     def open_main(self):
@@ -58,6 +59,16 @@ class AccountWindow(QWidget):
         self.username_txt.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.NoTextInteraction)
         # self.username_txt.setFrameStyle(QtWidgets.QFrame.NoFrame)
         self.username_txt.setObjectName("UsernameTxt")
+        connection = sqlite3.connect("mydb.db")
+        with open("user.txt", "r") as f:
+            r = f.read()
+            r = eval(r)
+            uid = r["uid"]
+        cursor = connection.cursor()
+        res = cursor.execute("SELECT username from Users where id='" + uid + "';").fetchone()
+        self.username_txt.setText(res[0])
+        res = cursor.execute()
+
 
         self.days_txt = QtWidgets.QTextBrowser(parent=self.central_widget)
         self.days_txt.setGeometry(QtCore.QRect(80, 500, 81, 51))
