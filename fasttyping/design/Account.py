@@ -67,7 +67,7 @@ class AccountWindow(QWidget):
         cursor = connection.cursor()
         res = cursor.execute("SELECT username from Users where id='" + uid + "';").fetchone()
         self.username_txt.setText(res[0])
-        res = cursor.execute()
+        res = cursor.execute("SELECT ")
 
 
         self.days_txt = QtWidgets.QTextBrowser(parent=self.central_widget)
